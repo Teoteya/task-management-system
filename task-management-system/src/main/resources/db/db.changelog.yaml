@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: classpath:db/changeSets/1-create-tables.sql
+  - include:
+      file: classpath:db/changeSets/2-add-data.sql

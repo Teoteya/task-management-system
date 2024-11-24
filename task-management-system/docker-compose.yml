@@ -1,0 +1,28 @@
+services:
+  task-management:  # Сервис нашего Spring Boot приложения. Имя может быть любым
+    image: openjdk:17-jdk-slim  # Базовый образ Java 17
+    build:
+      context: .  # Путь к директории с проектом. Текущая директория с исходным кодом и Dockerfile
+      dockerfile: Dockerfile  # Имя используемого Dockerfile. Указывать не обязательно, если имя файла — Dockerfile
+    ports:
+      - "8080:8080"  # Пробрасываем порт приложения на localhost:8080 (хост:контейнер)
+    environment:  # Переменные окружения для приложения
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/task-management  # URL базы данных
+      SPRING_DATASOURCE_USERNAME: postgres  # Имя пользователя БД
+      SPRING_DATASOURCE_PASSWORD: 12345  # Пароль пользователя БД
+    depends_on:
+      - db_postgresql  # Указывает, что контейнер с БД должен стартовать раньше. Зависимость от сервиса "db_postgresql"
+
+  db_postgresql:  # Сервис PostgreSQL. Имя может быть любым
+    image: postgres:17.0  # Образ PostgreSQL версии 17
+    ports:
+      - "5433:5432"  # Пробрасываем порт базы данных на localhost:5432
+    environment:  # Переменные окружения для настройки PostgreSQL
+      POSTGRES_USER: postgres  # Имя пользователя
+      POSTGRES_PASSWORD: 12345  # Пароль пользователя
+      POSTGRES_DB: task-management  # Имя базы данных
+    volumes:
+      - postgres-data:/var/lib/postgresql/data  # Хранение данных вне контейнера
+
+volumes:
+  postgres-data:  # Имя тома для хранения данных PostgreSQL
