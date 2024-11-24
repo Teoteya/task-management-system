@@ -113,7 +113,6 @@ public class TaskService {
 
     @Schema(description = "Реализация получения текущего пользователя (например, из контекста безопасности)")
     private User getCurrentUser() {
-        // Получаем пользователя напрямую из контекста безопасности
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.getPrincipal() instanceof User) {

@@ -7,13 +7,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 import java.util.Collections;
 
 @Service
 @Schema(description = "Класс для загрузки пользователей из базы данных")
-public class CustomUserDetailsService implements UserDetailsService {  // UserDetailsService — это интерфейс,
-    // который реализует Spring Security для загрузки данных о пользователе по имени (например, по email).
-    // Нужен для того, чтобы загружать пользователя из репозитория.
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -24,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {  // UserDe
     @Schema(description = "Загружает пользователя из БД по email. username соответствует email в базе данных.")
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)  // при авторизации в качестве username использовать email
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
         return new org.springframework.security.core.userdetails.User(
@@ -32,12 +31,5 @@ public class CustomUserDetailsService implements UserDetailsService {  // UserDe
                 user.getPassword(),
                 Collections.singleton(() -> user.getRole())
         );
-
-       /* return org.springframework.security.core.userdetails.User
-                .builder()
-                .username(user.getEmail())
-                .password(user.getPassword())
-                .roles(user.getRole().toString())
-                .build(); */
     }
 }

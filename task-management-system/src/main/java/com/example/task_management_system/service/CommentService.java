@@ -73,25 +73,18 @@ public class CommentService {
         response.setId(comment.getId());
         response.setContent(comment.getContent());
         response.setAuthorEmail(comment.getUser().getEmail());
-        //  response.setCreatedAt(comment.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))); // Форматируем дату
         return response;
     }
 
     @Schema(description = "Метод для получения текущего пользователя из контекста безопасности")
     public User getCurrentUser() {
-        // Извлекаем аутентифицированного пользователя
-        // SecurityContextHolder.getContext().getAuthentication() — используется для извлечения объекта аутентификации
-        // из контекста безопасности. Этот объект содержит информацию о текущем пользователе
-        // getPrincipal() — метод, который возвращает объект, представляющий аутентифицированного пользователя.
-        // Если используется стандартный UserDetails объект (например, при работе с Spring Security и JWT),
-        // это будет объект типа UserDetails
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof UserDetails) {
-            String email = ((UserDetails) principal).getUsername();  // мы получаем email текущего пользователя, который был использован для аутентификации
-            return userRepository.findByEmail(email) // находим пользователя в БД по email
-                    .orElseThrow(() -> new RuntimeException("User not found"));  // Если пользователь не найден, выбрасывается исключение CustomException
-        } // В случае, если текущий пользователь не аутентифицирован, мы выбрасываем исключение с кодом состояния UNAUTHORIZED
+            String email = ((UserDetails) principal).getUsername();
+            return userRepository.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+        }
         throw new RuntimeException("User is not authenticated");
     }
 

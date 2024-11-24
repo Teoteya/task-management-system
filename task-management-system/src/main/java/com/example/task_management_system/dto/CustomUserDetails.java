@@ -10,8 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @Schema(description = "Класс, представляющий пользователя в контексте Spring Security")
-public class CustomUserDetails implements UserDetails { // UserDetails можно использовать для извлечения
-    // текущего аутентифицированного пользователя в любом сервисе
+public class CustomUserDetails implements UserDetails {
 
     private final User user;
 

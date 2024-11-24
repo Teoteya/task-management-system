@@ -1,9 +1,7 @@
 package com.example.task_management_system.config;
 
-import com.example.task_management_system.security.JwtAuthenticationEntryPoint;
 import com.example.task_management_system.security.JwtAuthenticationFilter;
-import com.example.task_management_system.service.CustomUserDetailsService;
-import lombok.RequiredArgsConstructor;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,22 +13,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import io.swagger.v3.oas.annotations.media.Schema;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.AbstractRequestMatcherRegistry;
-import com.example.task_management_system.security.JwtTokenProvider;
 
 @Configuration
 @SpringBootApplication
 @EnableWebSecurity
-@EnableMethodSecurity // Для аннотаций @PreAuthorize
+@EnableMethodSecurity
 @Schema(description = "Настройка фильтров, ролей и прав доступа")
 public class SecurityConfig {
-    private final JwtAuthenticationFilter jwtAuthenticationFilter; // Внедрение фильтра
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-  //  public SecurityConfig() {}
+
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter; // Внедряем через конструктор
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     @Schema(description = "Основной метод конфигурации безопасности")
@@ -41,15 +35,9 @@ public class SecurityConfig {
                 .antMatchers("/login", "/register").permitAll()
                 .anyRequest().authenticated()  // Остальные маршруты требуют аутентификации
                 .and()
-               // .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtTokenProvider)) // Фильтр для работы с JWT
-              //  .and()
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Добавить ваш JWT фильтр
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
-//                .defaultSuccessUrl("/users/all", true)
-//                .permitAll()
-//                .and()
-//                .oauth2Login()
-                .defaultSuccessUrl("/tasks/all", true) // Перенаправление после успешного входа
+                .defaultSuccessUrl("/tasks/all", true)
                 .permitAll()
                 .and()
                 .logout()
@@ -73,14 +61,5 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-   /* @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());  // Настройка UserDetailsService
-    }
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();  // Это нужно для фильтра JWT
-    }  */
 }

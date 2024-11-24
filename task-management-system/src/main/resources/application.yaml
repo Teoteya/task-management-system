@@ -20,4 +20,4 @@ spring:
 
 jwt:
   secret: "secure_secret_key"
-  expiration: 3600000 # 1 час в миллисекундах
+  expiration: 3600000

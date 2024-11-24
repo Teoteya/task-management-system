@@ -32,17 +32,4 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(request));
     }
 
-    /* @PostMapping("/register")
-    @Operation(summary = "Регистрация пользователя", description = "Позволяет зарегистрировать нового пользователя.")
-    public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
-        String response = authService.register(request);
-        return ResponseEntity.ok(response);
-    }
-
-    @PostMapping("/login")
-    @Operation(summary = "Авторизация пользователя", description = "Возвращает JWT токен для аутентифицированного пользователя.")
-    public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthRequest request) {
-        AuthResponse response = authService.authenticate(request);
-        return ResponseEntity.ok(response);
-    } */
 }
