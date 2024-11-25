@@ -23,24 +23,25 @@ URL: jdbc:postgresql://localhost:5432/task_management
 Имя пользователя: postgres
 Пароль: 12345
 
-2. Соберите проект с помощью Maven:
-mvn clean package
+3. Соберите проект с помощью Maven:
+mvn clean package 
+
 После успешной сборки в папке target появится JAR-файл:
 task-management-system-0.0.1-SNAPSHOT.jar
 
-3. Запустите Docker. Затем выполните команду для сборки Docker-образа:
+4. Запустите Docker. Затем выполните команду для сборки Docker-образа:
 docker-compose build
 
-4. Запустите Docker Compose в фоновом режиме. Запустите контейнеры (приложение и базу данных):
+5. Запустите Docker Compose в фоновом режиме. Запустите контейнеры (приложение и базу данных):
 docker-compose up
+
 После успешного запуска приложение будет доступно по адресу http://localhost:8080.
+
+6. Чтобы остановить приложение и удалить контейнеры, выполните:
+docker-compose down
 
 ## Документация API.
 Swagger UI:
 После запуска приложения вы можете открыть Swagger UI для тестирования API: 
 http://localhost:8080/swagger-ui.html
 Документация API: http://localhost:8080/v3/api-docs
-
-5. Остановка проекта
-Чтобы остановить приложение и удалить контейнеры, выполните:
-docker-compose down
