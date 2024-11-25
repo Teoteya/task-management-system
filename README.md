@@ -18,9 +18,13 @@ git clone https://github.com/Teoteya/task-management-system.git
 
 2. Запустите PostgreSQL и создайте базу данных:
 CREATE DATABASE task_management;
+
 Для подключения к базе данных используйте следующие параметры:
+
 URL: jdbc:postgresql://localhost:5432/task_management
+
 Имя пользователя: postgres
+
 Пароль: 12345
 
 3. Соберите проект с помощью Maven:
