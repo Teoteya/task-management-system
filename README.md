@@ -36,7 +36,7 @@ task-management-system-0.0.1-SNAPSHOT.jar
 4. Запустите Docker. Затем выполните команду для сборки Docker-образа:
 docker-compose build
 
-5. Запустите Docker Compose в фоновом режиме. Запустите контейнеры (приложение и базу данных):
+5. Запустите Docker Compose. Запустите контейнеры (приложение и базу данных):
 docker-compose up
 
 После успешного запуска приложение будет доступно по адресу http://localhost:8080.
